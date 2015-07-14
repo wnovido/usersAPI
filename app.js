@@ -8,7 +8,6 @@ var mysql   = require("mysql");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-var rest = require('./routes/REST');
 
 var app = express();
 

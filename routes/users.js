@@ -30,7 +30,7 @@ router.post('/',function(req,res){
         "error":1,
         "Users":""
     };
-    
+
     if (!!Email && !!Password) {
         connection.query("INSERT INTO user_login (user_email, user_password) VALUES(?,?)",[Email,Password],function(err, rows, fields){
             if (!!err) {
@@ -58,11 +58,11 @@ router.put('/',function(req,res){
         "Users":""
     };
 
-    if(!!Id && !!Bookname && !!Authorname && !!Price){
-        connection.query("UPDATE user_login SET user_email=?, user_password=? WHERE bookID=?",[Email,Password,Id],function(err, rows, fields){
+    if(!!Id && !!Email && !!Password){
+        connection.query("UPDATE user_login SET user_email=?, user_password=? WHERE user_id=?",[Email,Password,Id],function(err, rows, fields){
             if(!!err){
                 data["Users"] = "Error Updating data: " + err;
-                console.log(err);                
+                console.log(err);
             }else{
                 data["error"] = 0;
                 data["Users"] = "Updated User Successfully";
@@ -75,6 +75,54 @@ router.put('/',function(req,res){
     }
 });
 
+
+router.delete('/',function(req,res){
+    var Id = req.body.id;
+    var data = {
+        "error":1,
+        "Users":""
+    };
+    if (!!Id){
+        connection.query("DELETE FROM user_login WHERE user_id=?",[Id],function(err, rows, fields){
+            if(!!err){
+                data["Users"] = "Error deleting data: " + err;
+                console.log(err);
+            }else{
+                data["error"] = 0;
+                data["Users"] = "Delete Book Successfully";
+            }
+            res.json(data);
+        });
+    } else {
+        data["Users"] = "Please provide all required data (i.e : id )";
+        res.json(data);
+    }
+});
+
+
+router.get("/:user_id",function(req,res) {
+	var Id = req.params.user_id
+    var data = {
+        "error":1,
+        "Users":""
+    };
+    if (!!Id){
+        connection.query("SELECT * FROM user_login WHERE user_id=?",[Id],function(err, rows, fields){
+            if(!!err){
+                data["Users"] = "Error selecting data: " + err;
+                console.log(err);
+            }else{
+                data["error"] = 0;
+                data["Users"] = rows;
+            }
+            res.json(data);
+        });
+    } else {
+        data["Users"] = "Please provide all required data (i.e : id )";
+        res.json(data);
+    }
+
+});
 
 
 module.exports = router;
