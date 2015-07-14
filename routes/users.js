@@ -25,14 +25,14 @@ router.get('/', function(req, res) {
 
 router.post('/',function(req,res){	
     var Email = req.body.email;
-    var Pword = md5(req.body.password);
-
+    var Password = md5(req.body.password);
     var data = {
         "error":1,
-        "Books":""
+        "Users":""
     };
-    if (!!Email && !!Pword) {
-        connection.query("INSERT INTO user_login (user_email, user_password) VALUES(?,?)",[Email,Pword],function(err, rows, fields){
+    
+    if (!!Email && !!Password) {
+        connection.query("INSERT INTO user_login (user_email, user_password) VALUES(?,?)",[Email,Password],function(err, rows, fields){
             if (!!err) {
                 data["Users"] = "Error Adding data: " + err;
                 console.log(err);
@@ -47,5 +47,34 @@ router.post('/',function(req,res){
         res.json(data);
     }
 });
+
+
+router.put('/',function(req,res){
+    var Id = req.body.id;
+    var Email = req.body.email;
+    var Password = md5(req.body.password);
+    var data = {
+        "error":1,
+        "Users":""
+    };
+
+    if(!!Id && !!Bookname && !!Authorname && !!Price){
+        connection.query("UPDATE user_login SET user_email=?, user_password=? WHERE bookID=?",[Email,Password,Id],function(err, rows, fields){
+            if(!!err){
+                data["Users"] = "Error Updating data: " + err;
+                console.log(err);                
+            }else{
+                data["error"] = 0;
+                data["Users"] = "Updated User Successfully";
+            }
+            res.json(data);
+        });
+    }else{
+        data["Users"] = "Please provide all required data (i.e : id, Bookname, Authorname, Price)";
+        res.json(data);
+    }
+});
+
+
 
 module.exports = router;

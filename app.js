@@ -26,11 +26,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 connection = mysql.createConnection({ // Mysql Connection
-    // host : 'localhost',
-    // user : 'root',
-    // password : 'nbuser',
-    // database : 'books',
-
         connectionLimit : 100,
         host : 'localhost',
         user : 'root',
