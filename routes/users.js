@@ -20,7 +20,6 @@ router.get('/', function(req, res) {
 	        res.json(data);
 	    }
 	});
-
 });
 
 router.post('/',function(req,res){	
@@ -121,7 +120,6 @@ router.get("/:user_id",function(req,res) {
         data["Users"] = "Please provide all required data (i.e : id )";
         res.json(data);
     }
-
 });
 
 

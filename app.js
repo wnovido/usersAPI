@@ -6,8 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mysql   = require("mysql");
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -32,6 +30,9 @@ connection = mysql.createConnection({ // Mysql Connection
         database : 'restful_api_demo',
         debug : false    
 });
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
 
 app.use('/', routes);
 app.use('/users', users);
